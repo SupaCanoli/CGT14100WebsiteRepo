@@ -5,6 +5,7 @@
     --accent-soft: rgba(47, 155, 255, 0.75);
     --text: #46a8ff;
     --white: #ffffff;
+    --label-column-width: clamp(210px, 22vw, 280px);
 }
 
 * {
@@ -64,17 +65,18 @@ body {
 
 .form-label {
     float: left;
-    width: 175px;
-    margin: 7px 14px 0 0;
+    width: var(--label-column-width);
+    margin: 7px 0 0;
     font-size: clamp(2rem, 3.1vw, 3.1rem);
     line-height: 1;
     color: var(--text);
     text-align: right;
+    white-space: nowrap;
 }
 
 .input-area {
     float: left;
-    width: calc(100% - 189px);
+    width: calc(100% - var(--label-column-width));
 }
 
 .field {
@@ -184,7 +186,7 @@ body {
 }
 
 .error-msg {
-    margin: 8px 0 0 191px;
+    margin: 8px 0 0 var(--label-column-width);
     color: #ffd4e5;
     min-height: 1.3em;
 }
@@ -210,17 +212,17 @@ body {
     }
 
     .form-label {
-        float: none;
-        width: 100%;
-        margin: 0 0 8px;
-        text-align: left;
-        font-size: clamp(1.7rem, 8vw, 2.2rem);
+        float: left;
+        width: clamp(118px, 33vw, 150px);
+        margin: 4px 0 0;
+        text-align: right;
+        font-size: clamp(1rem, 4.5vw, 1.7rem);
     }
 
     .input-area,
     .password-wrap {
-        float: none;
-        width: 100%;
+        float: left;
+        width: calc(100% - clamp(118px, 33vw, 150px));
     }
 
     .field {
@@ -244,7 +246,7 @@ body {
 
     .options-row,
     .error-msg {
-        margin-left: 0;
+        margin-left: clamp(118px, 33vw, 150px);
     }
 
     .help-links {
