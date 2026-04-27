@@ -5,8 +5,6 @@
     --accent-soft: rgba(47, 155, 255, 0.75);
     --text: #46a8ff;
     --white: #ffffff;
-    --label-column-width: clamp(210px, 24vw, 300px);
-    --label-gap: 16px;
 }
 
 * {
@@ -66,18 +64,17 @@ body {
 
 .form-label {
     float: left;
-    width: var(--label-column-width);
-    margin: 7px var(--label-gap) 0 0;
+    width: 175px;
+    margin: 7px 14px 0 0;
     font-size: clamp(2rem, 3.1vw, 3.1rem);
     line-height: 1;
     color: var(--text);
     text-align: right;
-    white-space: nowrap;
 }
 
 .input-area {
     float: left;
-    width: calc(100% - var(--label-column-width) - var(--label-gap));
+    width: calc(100% - 189px);
 }
 
 .field {
@@ -128,10 +125,78 @@ body {
     transform: translateX(2px);
 }
 
+.options-row {
+    margin: 4px 0 8px 191px;
+    font-size: 1rem;
+    color: #8ac5ff;
+}
+
+.remember-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+.secondary-btn {
+    border: 2px solid var(--accent-soft);
+    background: transparent;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.secondary-btn:hover,
+.secondary-btn:focus {
+    background-color: rgba(47, 155, 255, 0.18);
+}
+
+.help-nav {
+    margin-top: 16px;
+    clear: both;
+}
+
+.help-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    justify-content: center;
+}
+
+.help-links a {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #9fd2ff;
+    text-decoration: none;
+}
+
+.help-links a:hover,
+.help-links a:focus {
+    border-color: var(--accent-soft);
+    background: rgba(47, 155, 255, 0.12);
+}
+
 .error-msg {
-    margin: 8px 0 0 calc(var(--label-column-width) + var(--label-gap));
+    margin: 8px 0 0 191px;
     color: #ffd4e5;
     min-height: 1.3em;
+}
+
+#help-section {
+    max-width: 860px;
+    width: 100%;
+    margin-top: 18px;
+    color: #9bd0ff;
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 10px 12px;
 }
 
 @media (max-width: 760px) {
@@ -177,7 +242,12 @@ body {
         font-size: 1.4rem;
     }
 
+    .options-row,
     .error-msg {
         margin-left: 0;
+    }
+
+    .help-links {
+        justify-content: flex-start;
     }
 }
