@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form | Supa Logs</title>
+    <link rel="stylesheet" href="contact.css">
+</head>
+<body id="contact-top">
+    <div class="page-shell">
+        <header class="sticky-header">
+            <div class="top-banner">
+                <a class="back-to-login" href="index.html" aria-label="Back to Log In page">↩</a>
+                <h1 class="site-title">Contact Form</h1>
+            </div>
+            <nav class="nav-wrap" aria-label="Primary navigation">
+                <ul class="main-nav">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="log1.html">Log # 1</a></li>
+                    <li><a href="log2.html">Log # 2</a></li>
+                    <li><a href="log3.html">Log # 3</a></li>
+                    <li><a href="log4.html">Log # 4</a></li>
+                    <li><a href="contact.html" aria-current="page">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="content-panel">
+            <p class="intro-note">
+                You can fill this form out here to get more info when this website or things relating to this story get
+                updated! (Enter N/A for any contact methods you don't want.)
+            </p>
+
+            <form id="contactForm" class="contact-form" action="contact.php" method="post">
+                <div class="form-row">
+                    <label for="discord">Discord:</label>
+                    <input class="field" type="text" id="discord" name="discord" required aria-required="true">
+                </div>
+
+                <div class="form-row">
+                    <label for="instagram">Instagram:</label>
+                    <input class="field" type="text" id="instagram" name="instagram" required aria-required="true">
+                </div>
+
+                <div class="form-row">
+                    <label for="bluesky">BlueSky:</label>
+                    <input class="field" type="text" id="bluesky" name="bluesky" required aria-required="true">
+                </div>
+
+                <div class="form-row">
+                    <label for="phone">Phone Number:</label>
+                    <input class="field" type="text" id="phone" name="phone" required aria-required="true">
+                </div>
+
+                <div class="submit-row">
+                    <label for="email">Email Address:</label>
+                    <div class="email-input-wrap">
+                        <input class="field" type="email" id="email" name="email" required aria-required="true">
+                        <button class="submit-btn" type="submit" aria-label="Confirm all 5 contact fields" title="Confirm all contact info">✓</button>
+                        <span id="successMessage" class="success-msg" aria-live="polite"></span>
+                    </div>
+                </div>
+
+                <p id="errorMessage" class="error-msg" aria-live="polite"></p>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            var form = document.getElementById("contactForm");
+            var errorMessage = document.getElementById("errorMessage");
+            var successMessage = document.getElementById("successMessage");
+            var submitButton = form.querySelector(".submit-btn");
+            var fields = [
+                document.getElementById("discord"),
+                document.getElementById("instagram"),
+                document.getElementById("bluesky"),
+                document.getElementById("phone"),
+                document.getElementById("email")
+            ];
+
+            form.addEventListener("submit", function (event) {
+                var firstInvalid = null;
+                var i;
+
+                for (i = 0; i < fields.length; i += 1) {
+                    if (!fields[i].value.trim()) {
+                        firstInvalid = fields[i];
+                        break;
+                    }
+                }
+
+                if (firstInvalid) {
+                    event.preventDefault();
+                    successMessage.textContent = "";
+                    errorMessage.textContent = "Please fill out all contact fields before continuing.";
+                    firstInvalid.focus();
+                    return;
+                }
+
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                event.preventDefault();
+                successMessage.textContent = "";
+                errorMessage.textContent = "";
+                submitButton.disabled = true;
+
+                for (i = 0; i < fields.length; i += 1) {
+                    fields[i].value = fields[i].value.trim();
+                }
+
+                fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form),
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                })
+                    .then(function (response) {
+                        return response.json().catch(function () {
+                            return {
+                                success: false,
+                                message: "Server response could not be read."
+                            };
+                        });
+                    })
+                    .then(function (data) {
+                        if (!data.success) {
+                            successMessage.textContent = "";
+                            errorMessage.textContent = data.message || "Something went wrong while sending your info.";
+                            return;
+                        }
+
+                        errorMessage.textContent = "";
+                        successMessage.textContent = data.message || "Your contact info has been sent. Thank you for your support!";
+                    })
+                    .catch(function () {
+                        successMessage.textContent = "";
+                        errorMessage.textContent = "Could not connect to the server. Please try again.";
+                    })
+                    .finally(function () {
+                        submitButton.disabled = false;
+                    });
+            });
+        }());
+    </script>
+</body>
+</html>
