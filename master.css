@@ -5,6 +5,8 @@
     --accent-soft: rgba(47, 155, 255, 0.75);
     --text: #46a8ff;
     --white: #ffffff;
+    --grid-main: rgba(213, 245, 255, 0.1);
+    --grid-minor: rgba(213, 245, 255, 0.05);
     --label-column-width: clamp(210px, 22vw, 280px);
 }
 
@@ -19,7 +21,12 @@ body {
     min-height: 100%;
     font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
     background: var(--bg);
-    background-image: radial-gradient(circle at top, #3f3a7f 0%, #37336e 55%);
+    background-image:
+        repeating-linear-gradient(to right, var(--grid-main) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(to bottom, var(--grid-main) 0 2px, transparent 2px 120px),
+        repeating-linear-gradient(to right, var(--grid-minor) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(to bottom, var(--grid-minor) 0 1px, transparent 1px 40px),
+        radial-gradient(circle at top, #3f3a7f 0%, #37336e 55%);
     background-repeat: no-repeat;
     background-size: cover;
     color: var(--text);
@@ -40,8 +47,14 @@ body {
     background: var(--panel);
     border-radius: 14px;
     padding: 16px 18px 22px;
-    display: table;
-    table-layout: fixed;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-panel #loginForm {
+    width: min(800px, 100%);
 }
 
 .login-title {
@@ -209,6 +222,7 @@ body {
 
     .login-panel {
         padding: 20px 10px 14px;
+        min-height: 0;
     }
 
     .form-label {
