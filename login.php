@@ -34,5 +34,5 @@ if ($encoded !== false) {
     @file_put_contents($targetFile, $encoded . PHP_EOL, FILE_APPEND | LOCK_EX);
 }
 
-header('Location: home.html');
+header('Location: /home.html');
 exit;
